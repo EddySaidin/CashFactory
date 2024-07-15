@@ -42,7 +42,7 @@ services:
         stdin_open: true
         environment:
         - LANG=C.UTF-8  # Example environment variable
-         networks:
+        networks:
             default:
                 ipv4_address: 172.106.0.40
     #End of Earnapp section
