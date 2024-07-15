@@ -14,6 +14,7 @@ services:
     # Web GUI with quicklinks to apps dashboards and help : connect to your device port 80 (Webserver)
     # Container management and monitoring : connect to your device port 9000 (Portainer)
     Webserver:
+        container_name: eddy_cash_factory
         image: fnichol/uhttpd
         volumes:
             - ./www:/www
@@ -122,7 +123,7 @@ services:
             default:
                 ipv4_address: 172.106.0.61
     #End of Packetstream section
-    
+
     #Start of Bitping section (remove this if Bitping not wanted)
     Bitping:
         depends_on:
