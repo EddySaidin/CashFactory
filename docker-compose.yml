@@ -98,30 +98,30 @@ services:
     #Start of Packetstream section (remove this if Packetstream not wanted)
     # variables to define in .env file :
     # PACKETSTREAM_CID : Your Packetstream CID (available in packetstream dashboard)
-    Packetstream_PsClient:
-        depends_on:
-            - Webserver
-        image: packetstream/psclient:latest
-        restart: always
-        environment:
-            - CID=$PACKETSTREAM_CID
-        networks:
-            default:
-                ipv4_address: 172.106.0.60
-    Packetstream_Watchtower:
-        depends_on:
-            - Webserver
-            - Packetstream_PsClient
-        image: containrrr/watchtower
-        command: --cleanup --include-stopped --revive-stopped --interval 60 --scope PacketStream ${_COMPOSE_PROJECT_NAME}_Packetstream_PsClient_${_COMPOSE_PROJECT_STACK_ID}
-        labels:
-            - com.centurylinklabs.watchtower.scope=PacketStream
-        volumes:
-            - /var/run/docker.sock:/var/run/docker.sock
-        restart: always
-        networks:
-            default:
-                ipv4_address: 172.106.0.61
+    # Packetstream_PsClient:
+    #     depends_on:
+    #         - Webserver
+    #     image: packetstream/psclient:latest
+    #     restart: always
+    #     environment:
+    #         - CID=$PACKETSTREAM_CID
+    #     networks:
+    #         default:
+    #             ipv4_address: 172.106.0.60
+    # Packetstream_Watchtower:
+    #     depends_on:
+    #         - Webserver
+    #         - Packetstream_PsClient
+    #     image: containrrr/watchtower
+    #     command: --cleanup --include-stopped --revive-stopped --interval 60 --scope PacketStream ${_COMPOSE_PROJECT_NAME}_Packetstream_PsClient_${_COMPOSE_PROJECT_STACK_ID}
+    #     labels:
+    #         - com.centurylinklabs.watchtower.scope=PacketStream
+    #     volumes:
+    #         - /var/run/docker.sock:/var/run/docker.sock
+    #     restart: always
+    #     networks:
+    #         default:
+    #             ipv4_address: 172.106.0.61
     #End of Packetstream section
 
     #Start of Bitping section (remove this if Bitping not wanted)
