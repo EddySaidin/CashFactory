@@ -33,14 +33,14 @@ services:
     #                            This will print 9f33ffbb8a9dcedb28ea909775a6b0d3  -
     #                            In that case use : sdk-node-9f33ffbb8a9dcedb28ea909775a6b0d3
     Earnapp:
-        image: ubuntu:latest
-        command: tail -f /dev/null  # Keeps the container running
+        depends_on:
+            - Webserver
+        image: fazalfarhan01/earnapp:lite
         volumes:
-        - ./shared:/shared  # Example volume mapping
-        tty: true
-        stdin_open: true
+            - earnapp-data:/etc/earnapp
+        restart: always
         environment:
-        - LANG=C.UTF-8  # Example environment variable
+            - EARNAPP_UUID=$EARNAPP_DEVICE_ID
         networks:
             default:
                 ipv4_address: 172.106.0.20
