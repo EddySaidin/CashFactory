@@ -18,25 +18,11 @@ services:
         volumes:
             - ./www:/www
         ports:
-            - 80:80
+            - 84:84
         restart: always
         networks:
             default:
                 ipv4_address: 172.106.0.10
-    Portainer:
-        image: portainer/portainer-ce:latest
-        volumes:
-            - /var/run/docker.sock:/var/run/docker.sock
-            - portainer_data:/data
-        ports:
-            - 8000:8000
-            - 9000:9000
-            - 9443:9443
-        restart: always
-        networks:
-            default:
-                ipv4_address: 172.106.0.11
-    #End of Portainer + Webserver section
 
     #Start of Earnapp section (remove this if Earnapp not wanted)
     # variables to define in .env file :
@@ -47,7 +33,6 @@ services:
     #                            In that case use : sdk-node-9f33ffbb8a9dcedb28ea909775a6b0d3
     Earnapp:
         depends_on:
-            - Portainer
             - Webserver
         image: fazalfarhan01/earnapp:lite
         volumes:
@@ -66,16 +51,15 @@ services:
     # HONEYGAIN_EMAIL : Your Honeygain account email
     # HONEYGAIN_PASSWD : Your Honeygain account password 
     # DEVICE_NAME : This computer name (for display on dashboard)
-    Honeygain:
-        depends_on:
-            - Portainer
-            - Webserver
-        image: honeygain/honeygain
-        command: -tou-accept -email $HONEYGAIN_EMAIL -pass '$HONEYGAIN_PASSWD' -device $DEVICE_NAME
-        restart: always
-        networks:
-            default:
-                ipv4_address: 172.106.0.30
+    # Honeygain:
+    #     depends_on:
+    #         - Webserver
+    #     image: honeygain/honeygain
+    #     command: -tou-accept -email $HONEYGAIN_EMAIL -pass '$HONEYGAIN_PASSWD' -device $DEVICE_NAME
+    #     restart: always
+    #     networks:
+    #         default:
+    #             ipv4_address: 172.106.0.30
     #End of HoneyGain section
 
     #Start of IproyalPawns section (remove this if IproyalPawns not wanted)
@@ -85,7 +69,6 @@ services:
     # DEVICE_NAME : This computer name (for display on dashboard)
     IproyalPawns:
         depends_on:
-            - Portainer
             - Webserver
         image: iproyal/pawns-cli:latest
         command: -email=$IPROYALPAWNS_EMAIL -password='$IPROYALPAWNS_PASSWD' -device-name=$DEVICE_NAME -accept-tos
@@ -98,18 +81,17 @@ services:
     #Start of Peer2profit section (remove this if Peer2profit not wanted)
     # variables to define in .env file :
     # PEER2PROFIT_EMAIL : Your Peer2profit account email
-    Peer2profit:
-        depends_on:
-            - Portainer
-            - Webserver
-        image: enwaiax/peer2profit:latest
-        restart: always
-        environment:
-            - email=$PEER2PROFIT_EMAIL
-            - use_proxy=false
-        networks:
-            default:
-                ipv4_address: 172.106.0.50
+    # Peer2profit:
+    #     depends_on:
+    #         - Webserver
+    #     image: enwaiax/peer2profit:latest
+    #     restart: always
+    #     environment:
+    #         - email=$PEER2PROFIT_EMAIL
+    #         - use_proxy=false
+    #     networks:
+    #         default:
+    #             ipv4_address: 172.106.0.50
     #End of Peer2profit section
 
     #Start of Packetstream section (remove this if Packetstream not wanted)
@@ -117,7 +99,6 @@ services:
     # PACKETSTREAM_CID : Your Packetstream CID (available in packetstream dashboard)
     Packetstream_PsClient:
         depends_on:
-            - Portainer
             - Webserver
         image: packetstream/psclient:latest
         restart: always
@@ -128,7 +109,6 @@ services:
                 ipv4_address: 172.106.0.60
     Packetstream_Watchtower:
         depends_on:
-            - Portainer
             - Webserver
             - Packetstream_PsClient
         image: containrrr/watchtower
@@ -146,7 +126,6 @@ services:
     #Start of Bitping section (remove this if Bitping not wanted)
     Bitping:
         depends_on:
-            - Portainer
             - Webserver
         image: bitping/bitping-node:latest
         restart: always
@@ -160,16 +139,15 @@ services:
     #Start of TraffMonetizer section (remove this if TraffMonetizer not wanted)
     # variables to define in .env file :
     # TRAFFMONETIZER_TOKEN : Your application token (available in TraffMonetizer dashboard)
-    TraffMonetizer:
-        depends_on:
-            - Portainer
-            - Webserver
-        image: traffmonetizer/cli_v2:latest
-        restart: always
-        command: start accept --token ${TRAFFMONETIZER_TOKEN}
-        networks:
-            default:
-                ipv4_address: 172.106.0.80
+    # TraffMonetizer:
+    #     depends_on:
+    #         - Webserver
+    #     image: traffmonetizer/cli_v2:latest
+    #     restart: always
+    #     command: start accept --token ${TRAFFMONETIZER_TOKEN}
+    #     networks:
+    #         default:
+    #             ipv4_address: 172.106.0.80
     #End of Packetstream section   
     
     #Start of Repocket section (remove this if Repocket not wanted)
@@ -178,7 +156,6 @@ services:
     # RP_API_KEY : Your application api key (available in repocket dashboard)
     Repocket:
         depends_on:
-            - Portainer
             - Webserver
         image: repocket/repocket:latest
         restart: always
@@ -193,17 +170,17 @@ services:
     #Start of Proxylite section (remove this if Proxylite not wanted)
     # variables to define in .env file :
     # PROXYLITE_USER_ID : Your application use id (available in proxylite dashboard)
-    Proxylite:
-        depends_on:
-            - Portainer
-            - Webserver
-        image: proxylite/proxyservice:latest
-        restart: always
-        environment:
-          - USER_ID=$PROXYLITE_USER_ID
-        networks:
-            default:
-                ipv4_address: 172.106.0.100
+    # Proxylite:
+    #     depends_on:
+            
+    #         - Webserver
+    #     image: proxylite/proxyservice:latest
+    #     restart: always
+    #     environment:
+    #       - USER_ID=$PROXYLITE_USER_ID
+    #     networks:
+    #         default:
+    #             ipv4_address: 172.106.0.100
     #End of Proxylite section 
 
     #Start of Proxyrack section (remove this if Proxyrack not wanted)
@@ -211,7 +188,7 @@ services:
     # PROXYRACK_HOST_UUID : Your host UUID (random string), you can generate it using the command : cat /dev/urandom | LC_ALL=C tr -dc 'A-F0-9' | dd bs=1 count=64 2>/dev/null
     Proxyrack:
         depends_on:
-            - Portainer
+            
             - Webserver
         image: proxyrack/pop:latest
         restart: always
@@ -226,7 +203,7 @@ services:
     #Start of Cloudcollab section (remove if not wanted) => currently under evaluation by dev, seems not working well
     # Cloudcollab:
     #     depends_on:
-    #         - Portainer
+    #         
     #         - Webserver
     #     image: cloudcollabapp/peer:latest
     #     restart: always
@@ -240,7 +217,7 @@ services:
     # EARNFM_APIKEY : Your API key (available in earnfm dashboard -> more)
     EarnFm_Client:
         depends_on:
-            - Portainer
+            
             - Webserver
         image: earnfm/earnfm-client:latest
         restart: always
@@ -251,7 +228,7 @@ services:
                 ipv4_address: 172.106.0.130
     EarnFm_Watchtower:
         depends_on:
-            - Portainer
+            
             - Webserver
             - EarnFm_Client
         image: containrrr/watchtower
