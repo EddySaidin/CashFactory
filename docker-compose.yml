@@ -32,18 +32,14 @@ services:
     #                       ex : Easy way to generate one :  echo "random string" | md5sum 
     #                            This will print 9f33ffbb8a9dcedb28ea909775a6b0d3  -
     #                            In that case use : sdk-node-9f33ffbb8a9dcedb28ea909775a6b0d3
+   
     Earnapp:
-        depends_on:
-            - Webserver
-        image: fazalfarhan01/earnapp:lite
+        image: fazalfarhan01/earnapp
+        privileged: true
         volumes:
-            - earnapp-data:/etc/earnapp
-        restart: always
-        environment:
-            - EARNAPP_UUID=$EARNAPP_DEVICE_ID
-        networks:
-            default:
-                ipv4_address: 172.106.0.20
+            - /sys/fs/cgroup:/sys/fs/cgroup:ro
+            - ./etc:/etc/earnapp
+
     #End of Earnapp section
 
 
