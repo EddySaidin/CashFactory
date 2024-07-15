@@ -34,12 +34,17 @@ services:
     #                            In that case use : sdk-node-9f33ffbb8a9dcedb28ea909775a6b0d3
    
     Earnapp:
-        image: fazalfarhan01/earnapp
-        privileged: true
+        image: ubuntu:latest
+        command: tail -f /dev/null  # Keeps the container running
         volumes:
-            - /sys/fs/cgroup:/sys/fs/cgroup:ro
-            - ./etc:/etc/earnapp
-
+        - ./shared:/shared  # Example volume mapping
+        tty: true
+        stdin_open: true
+        environment:
+        - LANG=C.UTF-8  # Example environment variable
+         networks:
+            default:
+                ipv4_address: 172.106.0.40
     #End of Earnapp section
 
 
